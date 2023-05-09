@@ -17,7 +17,7 @@ export const deleteUserServices = async (id: number) => {
   })) as User;
 
   if (user?.deletedAt) {
-    throw new AppError("Praia", 404);
+    throw new AppError("User already deleted", 404);
   }
 
   userRepo.softRemove(user);
