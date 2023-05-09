@@ -18,4 +18,10 @@ export const userSchemaRequest = userSchema.omit({
   deletedAt: true,
 });
 
+export const userUpdateSchemaRequest = userSchemaRequest
+  .partial()
+  .omit({ admin: true });
+
 export const userSchemaReturn = userSchema.omit({ password: true });
+
+export const userArraySchemaReturn = userSchemaReturn.array();

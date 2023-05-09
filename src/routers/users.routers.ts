@@ -1,14 +1,50 @@
 import { Router } from "express";
-import { createUserControllers } from "../controllers/users.controllers";
+import {
+  createUserControllers,
+  deleteUserControllers,
+  readUserControllers,
+  updateUserControllers,
+} from "../controllers/users.controllers";
 import { validatedBodyMiddleware } from "../middlewares/validatedBody.middlewares";
-import { userSchemaRequest } from "../schemas/users.schemas";
-import { ensureEmailNotExists } from "../middlewares/ensureEmailNotExists.middlewares";
+import {
+  userSchemaRequest,
+  userUpdateSchemaRequest,
+} from "../schemas/users.schemas";
+import { ensureEmailNotExistsMiddlewares } from "../middlewares/ensureEmailNotExists.middlewares";
+import { validatedTokenMiddlewares } from "../middlewares/validatedToken.middlewares";
+import { ensureUserIsAdminMiddlewares } from "../middlewares/ensureUserIsAdmin.middlewares";
+import { ensureUserHasPermissionForUpdateMiddlewares } from "../middlewares/ensureUserHasPermissionForUpdate.middlewares";
+import { ensureIdExistsMiddlewares } from "../middlewares/ensureIdExists.middlewares";
 
-export const userRoute: Router = Router();
+export const userRouter: Router = Router();
 
-userRoute.post(
+userRouter.post(
   "",
   validatedBodyMiddleware(userSchemaRequest),
-  ensureEmailNotExists,
+  ensureEmailNotExistsMiddlewares,
   createUserControllers
+);
+
+userRouter.get(
+  "",
+  validatedTokenMiddlewares,
+  ensureUserIsAdminMiddlewares,
+  readUserControllers
+);
+
+userRouter.patch(
+  "/:id",
+  validatedBodyMiddleware(userUpdateSchemaRequest),
+  ensureIdExistsMiddlewares,
+  validatedTokenMiddlewares,
+  ensureUserHasPermissionForUpdateMiddlewares,
+  ensureEmailNotExistsMiddlewares,
+  updateUserControllers
+);
+userRouter.delete(
+  "/:id",
+  ensureIdExistsMiddlewares,
+  validatedTokenMiddlewares,
+  ensureUserIsAdminMiddlewares,
+  deleteUserControllers
 );

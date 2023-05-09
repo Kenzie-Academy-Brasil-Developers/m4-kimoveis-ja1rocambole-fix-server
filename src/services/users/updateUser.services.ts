@@ -1,17 +1,24 @@
-import { TUserRequest, TUserReturn } from "../../interfaces/users.interfaces";
+import {
+  TUserRequest,
+  TUserReturn,
+  TUserUpdateRequest,
+} from "../../interfaces/users.interfaces";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { Repository } from "typeorm";
 import { userSchemaReturn } from "../../schemas/users.schemas";
 
-export const createUserServices = async (
-  data: TUserRequest
-): Promise<TUserReturn> => {
+export const updateUserServices = async (
+  id: number,
+  data: TUserUpdateRequest
+) => {
   const userRepo: Repository<User> = AppDataSource.getRepository(User);
 
-  const user: User = userRepo.create(data);
+  const oldUser = await userRepo.findOneBy({
+    id,
+  });
 
-  await userRepo.save(user);
+  const user: User = await userRepo.save({ ...oldUser, ...data });
 
   const userReturn: TUserReturn = userSchemaReturn.parse(user);
 
