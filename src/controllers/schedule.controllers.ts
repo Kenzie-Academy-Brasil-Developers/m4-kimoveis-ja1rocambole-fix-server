@@ -1,0 +1,34 @@
+import { Request, Response } from "express";
+import { TSchedulesRequest } from "../interfaces/schedules.interfaces";
+import { ensureScheduleDateAndHourIsValidServices } from "../services/schedules/ensureScheduleDateAndHourIsValid.services";
+import { ensureSchedulesAvailableServices } from "../services/schedules/ensureSchedulesAvailable.services";
+import { ensureUserAvailableServices } from "../services/schedules/ensureUserAvailable.services";
+import { createSchedulesServices } from "../services/schedules/createSchedules.services";
+import { ensureRealEstateExistsServices } from "../services/schedules/ensureRealEstateExists.services";
+
+export const createScheduleControllers = async (
+  req: Request,
+  res: Response
+) => {
+  const scheduleReq: TSchedulesRequest = req.body;
+  const userId = Number(res.locals.id);
+  await ensureRealEstateExistsServices(scheduleReq.realEstateId);
+
+  ensureScheduleDateAndHourIsValidServices(scheduleReq.date, scheduleReq.hour);
+
+  await ensureSchedulesAvailableServices(
+    scheduleReq.date,
+    scheduleReq.hour,
+    scheduleReq.realEstateId
+  );
+
+  await ensureUserAvailableServices(scheduleReq.date, scheduleReq.hour, userId);
+
+  await createSchedulesServices(scheduleReq);
+
+  return res.status(201).json({ message: "Schedule created" });
+};
+
+export const readScheduleControllers = async (req: Request, res: Response) => {
+  return res.status(200).json();
+};

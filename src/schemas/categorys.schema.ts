@@ -6,3 +6,5 @@ export const categorySchemaReturn = z.object({
 });
 
 export const categorySchemaRequest = categorySchemaReturn.omit({ id: true });
+
+export const categoryArraySchemaReturn = categorySchemaReturn.array();
