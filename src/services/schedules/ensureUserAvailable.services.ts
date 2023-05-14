@@ -3,8 +3,6 @@ import { AppDataSource } from "../../data-source";
 import { Schedule } from "../../entities";
 import { AppError } from "../../errror";
 
-/*IMPEDIR QUE UM USUARIO ESTEJA AGENDADO EM LUGARES DIFERENTES NO MESMO HORARIO */
-
 export const ensureUserAvailableServices = async (
   date: string,
   hour: string,

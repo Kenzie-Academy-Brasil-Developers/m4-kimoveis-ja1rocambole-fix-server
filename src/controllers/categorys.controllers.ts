@@ -5,7 +5,6 @@ import {
 } from "../interfaces/categorys.interfaces";
 import { createCategory } from "../services/categories/createCategory.services";
 import { readCategoriesServices } from "../services/categories/readCategories.services";
-import { readCategoryWithIdServices } from "../services/categories/readCategoryWithId.services";
 import { readRealEstateWithCategoryIdServices } from "../services/realEsstate/readRealEstateWithCategoryId.services";
 
 export const createCategoryControllers = async (

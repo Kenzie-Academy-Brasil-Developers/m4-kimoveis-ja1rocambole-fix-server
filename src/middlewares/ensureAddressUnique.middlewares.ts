@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Address, RealEstate } from "../entities";
+import { Address } from "../entities";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { AppError } from "../errror";

@@ -1,12 +1,6 @@
-import {
-  TUserRequest,
-  TUserReturn,
-  TUserUpdateRequest,
-} from "../../interfaces/users.interfaces";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { Repository } from "typeorm";
-import { userSchemaReturn } from "../../schemas/users.schemas";
 import { AppError } from "../../errror";
 
 export const deleteUserServices = async (id: number) => {

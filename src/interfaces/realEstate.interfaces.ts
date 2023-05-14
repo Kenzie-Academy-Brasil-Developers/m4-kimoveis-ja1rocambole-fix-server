@@ -2,7 +2,6 @@ import { z } from "zod";
 import {
   realEstateSchemaRequest,
   realEstateSchemaReturn,
-  realEstateWithOutCategorySchemaArrayReturn,
   realEstateWithOutCategorySchemaReturn,
 } from "../schemas/realEstate.schemas";
 

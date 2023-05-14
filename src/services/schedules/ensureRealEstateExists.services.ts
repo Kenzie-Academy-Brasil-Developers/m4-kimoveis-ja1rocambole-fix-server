@@ -2,8 +2,6 @@ import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { RealEstate } from "../../entities";
 import { AppError } from "../../errror";
-import { NextFunction, Request, Response } from "express";
-import { TSchedulesRequest } from "../../interfaces/schedules.interfaces";
 
 export const ensureRealEstateExistsServices = async (realEstateId: number) => {
   const realEstateRepo: Repository<RealEstate> =

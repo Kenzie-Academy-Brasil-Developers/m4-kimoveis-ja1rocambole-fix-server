@@ -1,10 +1,14 @@
 import { Request, Response } from "express";
-import { TSchedulesRequest } from "../interfaces/schedules.interfaces";
+import {
+  TRealEstateSchedulesReturn,
+  TSchedulesRequest,
+} from "../interfaces/schedules.interfaces";
 import { ensureScheduleDateAndHourIsValidServices } from "../services/schedules/ensureScheduleDateAndHourIsValid.services";
 import { ensureSchedulesAvailableServices } from "../services/schedules/ensureSchedulesAvailable.services";
 import { ensureUserAvailableServices } from "../services/schedules/ensureUserAvailable.services";
 import { createSchedulesServices } from "../services/schedules/createSchedules.services";
 import { ensureRealEstateExistsServices } from "../services/schedules/ensureRealEstateExists.services";
+import { readSchedulesRealEstateServices } from "../services/schedules/readSchedulesRealEstate.services";
 
 export const createScheduleControllers = async (
   req: Request,
@@ -29,6 +33,14 @@ export const createScheduleControllers = async (
   return res.status(201).json({ message: "Schedule created" });
 };
 
-export const readScheduleControllers = async (req: Request, res: Response) => {
-  return res.status(200).json();
+export const readSchedulesRealEstateControllers = async (
+  req: Request,
+  res: Response
+) => {
+  const realEstateId = Number(req.params.id);
+
+  const schedulesReturn: TRealEstateSchedulesReturn =
+    await readSchedulesRealEstateServices(realEstateId);
+
+  return res.status(200).json(schedulesReturn);
 };

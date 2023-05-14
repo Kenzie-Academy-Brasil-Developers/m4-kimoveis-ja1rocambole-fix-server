@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   createScheduleControllers,
-  readScheduleControllers,
+  readSchedulesRealEstateControllers,
 } from "../controllers/schedule.controllers";
 import { validatedTokenMiddlewares } from "../middlewares/validatedToken.middlewares";
 import { validatedBodyMiddleware } from "../middlewares/validatedBody.middlewares";
@@ -22,5 +22,5 @@ scheduleRouter.get(
   validatedTokenMiddlewares,
   ensureUserIsAdminMiddlewares,
   ensureRealEstateExistsMiddlewares,
-  readScheduleControllers
+  readSchedulesRealEstateControllers
 );
